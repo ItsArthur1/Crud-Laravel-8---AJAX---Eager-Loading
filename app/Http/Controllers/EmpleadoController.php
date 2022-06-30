@@ -87,6 +87,7 @@ class EmpleadoController extends Controller
         // request()->validate(Empleado::$rules);
 
         // $empleado = Empleado::create($request->all());
+        // $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
 
         $this->validate($request, array(
             'Nombre'=>'required|string|max:100',
@@ -97,12 +98,15 @@ class EmpleadoController extends Controller
 
         ));
 
+        $empleado = request()->except('_token');
+
+
         if($request->hasFile('Foto')){
-            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
+            $empleado['Foto']=$request->file('Foto')->store('uploads','public');
 
         }
 
-        Empleado::insert($datosEmpleado);
+        Empleado::insert($empleado);
 
 
 

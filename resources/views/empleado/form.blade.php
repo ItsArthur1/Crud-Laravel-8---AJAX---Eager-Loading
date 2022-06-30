@@ -2,20 +2,24 @@
     <div class="box-body">
         
         <div class="form-group">
-            <label for="Nombre"> Nombre </label>
-            <input class="form-control" type="text" name="Nombre" value="{{ isset($empleado->Nombre)?$empleado->Nombre: '' }}" id="Nombre">
+        {{ Form::label('Nombre') }}
+        {{ Form::text('Nombre', $empleado->Nombre, ['class' => 'form-control' . ($errors->has('Nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+        {!! $errors->first('Nombre', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="ApellidoPaterno"> Apellido Paterno </label>
-            <input class="form-control"  type="text" name="ApellidoPaterno" value="{{ isset($empleado->ApellidoPaterno)?$empleado->ApellidoPaterno: '' }}" id="ApellidoPaterno">
+        {{ Form::label('Apellido Paterno') }}
+            {{ Form::text('ApellidoPaterno', $empleado->ApellidoPaterno, ['class' => 'form-control' . ($errors->has('ApellidoPaterno') ? ' is-invalid' : ''), 'placeholder' => 'Apellido Paterno']) }}
+            {!! $errors->first('ApellidoPaterno', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="ApellidoMaterno"> Apellido Materno </label>
-            <input class="form-control"  type="text" name="ApellidoMaterno" value="{{ isset($empleado->ApellidoMaterno)?$empleado->ApellidoMaterno: '' }}" id="ApellidoMaterno">
+        {{ Form::label('Apellido Materno') }}
+            {{ Form::text('ApellidoMaterno', $empleado->ApellidoMaterno, ['class' => 'form-control' . ($errors->has('ApellidoMaterno') ? ' is-invalid' : ''), 'placeholder' => 'Apellido Materno']) }}
+            {!! $errors->first('ApellidoMaterno', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            <label for="Correo"> Correo </label>
-            <input class="form-control"  type="text" name="Correo" value="{{ isset($empleado->Correo)?$empleado->Correo: '' }}" id="Correo">
+        {{ Form::label('Correo') }}
+            {{ Form::text('Correo', $empleado->Correo, ['class' => 'form-control' . ($errors->has('Correo') ? ' is-invalid' : ''), 'placeholder' => 'Correo', 'id'=>'Correo']),  }}
+            {!! $errors->first('Correo', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Empleo') }}
