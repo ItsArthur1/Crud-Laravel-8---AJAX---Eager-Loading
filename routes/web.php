@@ -28,4 +28,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
 Route::resource('empleos', App\Http\Controllers\EmpleoController::class);
 
-Route::post('/empleados/store',[EmpleadoController::class, 'ajax']);
+Route::post('/empleados-store',[EmpleadoController::class, 'ajax']);

@@ -30,7 +30,7 @@ class Empleado extends Model
 		'ApellidoMaterno' => 'required',
 		'Correo' => 'required',
 		'id_empleo' => 'required',
-		'Foto' => 'required',
+		'Foto' => 'required|image|max:2048|mimes:jpeg,png,jpg',
     ];
 
     protected $perPage = 20;

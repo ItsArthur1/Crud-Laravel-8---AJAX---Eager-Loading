@@ -56,7 +56,9 @@
 											<td>{{ $empleado->ApellidoMaterno }}</td>
 											<td>{{ $empleado->Correo }}</td>
 											<td>{{ $empleado->empleo->empleo }}</td>
-											<td>{{ $empleado->Foto }}</td>
+											<td>
+                                                <img width="200px" height="200px" src="{{ asset('storage').'/'.$empleado->Foto}}" alt="">
+                                            </td>
 
                                             <td>
                                                 <form action="{{ route('empleados.destroy',$empleado->id) }}" method="POST">

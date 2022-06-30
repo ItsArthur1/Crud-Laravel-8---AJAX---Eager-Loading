@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Foto') }}
-            {{ Form::text('Foto', $empleado->Foto, ['class' => 'form-control' . ($errors->has('Foto') ? ' is-invalid' : ''), 'placeholder' => 'Foto']) }}
+            {{ Form::file('Foto', $empleado->Foto, ['class' => 'form-control' . ($errors->has('Foto') ? ' is-invalid' : ''), 'placeholder' => 'Foto']) }}
             {!! $errors->first('Foto', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
@@ -54,25 +54,21 @@ jQuery(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('#email-error').remove();
         jQuery.ajax({
-                  url: "{{ url('/empleados/store') }}",
-                  type: 'POST',
-                  data: {
-                     Correo: jQuery('#Correo').val(),
-                  },
-                  success: function(data){
-                    // jQuery('.invalid-feedback').show();
-                    // alert('invalid-feedback');
-                    //Buscar alerts de bootstrap.
+            url: "{{ url('/empleados-store') }}",
+            type: 'POST',
+            data: {
+                Correo: jQuery('#Correo').val(),
+            },
+            success: function(data){
 
-                    if (data.success == false) {
-                            $('#Correo').after('<div id="email-error" class="text-danger" <strong>'+data.message[0]+'<strong></div>');
-                    } else {
-                            $('#Correo').after('<div id="email-error" class="text-success" <strong>'+data.message+'<strong></div>');
-                    }
-
-
-                  }});
-               });
-            });
+            if (data.success == false) {
+                $('#Correo').after('<div id="email-error" class="text-danger" <strong>'+data.message[0]+'<strong></div>');
+            }else {
+                $('#Correo').after('<div id="email-error" class="text-success" <strong>'+data.message+'<strong></div>');
+            }
+        }});
+    });
+});
 </script>
