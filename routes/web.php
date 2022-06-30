@@ -25,7 +25,7 @@ Route::resource('empleados', App\Http\Controllers\EmpleadoController::class)->mi
 Route::resource('empleos', App\Http\Controllers\EmpleoController::class)->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
-Route::resource('empleos', App\Http\Controllers\EmpleoController::class);
+// Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
+// Route::resource('empleos', App\Http\Controllers\EmpleoController::class);
 
 Route::post('/empleados-store',[EmpleadoController::class, 'ajax']);

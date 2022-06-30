@@ -57,7 +57,7 @@
 											<td>{{ $empleado->Correo }}</td>
 											<td>{{ $empleado->empleo->empleo }}</td>
 											<td>
-                                                <img width="200px" height="200px" src="{{ asset('storage').'/'.$empleado->Foto}}" alt="">
+                                                <img width="100" height="100" src="{{ asset('storage').'/'.$empleado->Foto}}" alt="">
                                             </td>
 
                                             <td>

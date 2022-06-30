@@ -42,7 +42,9 @@
                         </div>
                         <div class="form-group">
                             <strong>Foto:</strong>
-                            {{ $empleado->Foto }}
+                            <td>
+                                <img width="100" height="100" src="{{ asset('storage').'/'.$empleado->Foto}}" alt="">
+                            </td>
                         </div>
 
                     </div>

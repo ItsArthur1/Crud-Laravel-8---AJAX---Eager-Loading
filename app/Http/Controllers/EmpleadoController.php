@@ -6,6 +6,7 @@ use App\Models\Empleo;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 /**
  * Class EmpleadoController
  * @package App\Http\Controllers
@@ -83,9 +84,27 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Empleado::$rules);
+        // request()->validate(Empleado::$rules);
 
-        $empleado = Empleado::create($request->all());
+        // $empleado = Empleado::create($request->all());
+
+        $this->validate($request, array(
+            'Nombre'=>'required|string|max:100',
+            'ApellidoPaterno'=>'required|string|max:100',
+            'ApellidoMaterno'=>'required|string|max:100',
+            'Correo'=>'required|email|unique:empleados,Correo',
+            'Foto'=>'required|max:10000|mimes:jpeg,png,jpg',
+
+        ));
+
+        if($request->hasFile('Foto')){
+            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
+
+        }
+
+        Empleado::insert($datosEmpleado);
+
+
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado created successfully.');
@@ -125,12 +144,47 @@ class EmpleadoController extends Controller
      * @param  Empleado $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleado $empleado)
+    public function update(Request $request,$id)
     {
-        request()->validate(Empleado::$rules);
+        // request()->validate(Empleado::$rules);
 
-        $empleado->update($request->all());
+        // $empleado->update($request->all());
 
+
+        $this->validate($request, array(
+            'Nombre'=>'required|string|max:100',
+            'ApellidoPaterno'=>'required|string|max:100',
+            'ApellidoMaterno'=>'required|string|max:100',
+            'Correo'=>"required|email|unique:empleados,Correo,$id"
+        ));
+
+
+        $mensaje=[
+            'required'=>'El :attribute es requerido',
+
+        ];
+
+        if($request->hasFile('Foto')){
+            $campos=['Foto'=>'required|max:10000|mimes:jpeg,png,jpg',];
+            $mensaje=['Foto.required'=>'La foto es requerida'];
+
+        }
+
+
+        $datosEmpleado = request()->except(['_token','_method']);
+
+        if($request->hasFile('Foto')){
+            $empleado=Empleado::findOrFail($id);
+
+            Storage::delete('public/'.$empleado->Foto);
+
+            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads','public');
+        }
+
+
+        Empleado::where('id','=',$id)->update($datosEmpleado);
+        $empleado=Empleado::findOrFail($id);
+        
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado updated successfully');
     }
@@ -142,7 +196,14 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        $empleado = Empleado::find($id)->delete();
+        
+        $empleado=Empleado::findOrFail($id);
+
+        if(Storage::delete('public/'.$empleado->Foto)){
+
+            Empleado::destroy($id);
+
+        }
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado deleted successfully');
